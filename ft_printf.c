@@ -14,11 +14,18 @@ int contains(char *str , char c )
 	return (0);
 }
 
-int select_option(va_list va , char c)
+int select_option(va_list va , char chr)
 {
-	if(!contains( "%cspdiuxX" , c))
+	if(!contains( "%cspdiuxX" , chr))
 		return (0);
-	return (1000);
+	if(chr == '%')
+		return ((int)ft_putchar(chr));
+	if(chr == 'd')
+		return ((int)ft_putnbr(va_arg(va , int)));
+	if(chr == 's')
+		return ((int)ft_putstr((const char *)va_arg(va , const char *)));
+	
+	return (0);
 }
 
 int ft_printf(const char *str , ...)
@@ -26,14 +33,14 @@ int ft_printf(const char *str , ...)
 	va_list va;
 	va_start(va,str);
 	int s;
-	int c; 
+	int cnt; 
 	s = 0;
-	c = 0;
+	cnt = 0;
 	while (*str != '\0')
 	{
 		if(s == 1)
 		{
-			c += select_option(va , *str);
+			cnt += select_option(va , *str);
 			s=0;
 		}
 		else 
@@ -41,10 +48,10 @@ int ft_printf(const char *str , ...)
 			if(*str == '%')
 				s = 1;
 			else
-				c += ft_putchar(*str);			
+				cnt += ft_putchar(*str);			
 		}
 		str++;
 	}
-	return (c);
+	return (cnt);
 }
 
