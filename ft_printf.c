@@ -1,5 +1,26 @@
 #include"ft_printf.h"
 
+int contains(char *str , char c )
+{
+	int r;
+
+	r = 0;
+	while (*str)
+	{
+		if (*str == c)
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+int select_option(va_list va , char c)
+{
+	if(!contains( "%cspdiuxX" , c))
+		return (0);
+	return (1000);
+}
+
 int ft_printf(const char *str , ...)
 {
 	va_list va;
@@ -12,6 +33,7 @@ int ft_printf(const char *str , ...)
 	{
 		if(s == 1)
 		{
+			c += select_option(va , *str);
 			s=0;
 		}
 		else 
@@ -25,3 +47,4 @@ int ft_printf(const char *str , ...)
 	}
 	return (c);
 }
+
