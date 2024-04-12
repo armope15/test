@@ -6,99 +6,63 @@
 /*   By: armolina <armolina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:50:34 by armolina          #+#    #+#             */
-/*   Updated: 2024/04/12 10:50:35 by armolina         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:32:12 by armolina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	count;
-
-	count = 0;
-	while (*s != '\0')
-	{
-		count++;
-		s++;
-	}
-	return (count);
-}
-
-unsigned int	find_digit(int n, int div)
-{
-	int	digit;
-
-	digit = n / div;
-	if (digit < 0)
-		digit = digit * -1;
-	return ((unsigned int)digit);
-}
-
 int	ft_putnbr(int n)
 {
-	int		div;
-	char	digit;
-	int		cnt;
+	int	i;
 
-	cnt = 0;
-	if (n == 0)
-	{
-		return (write(1, "0", 1));
-	}
-	div = 1000000000;
+	i = 0;
+	if (n == INT_MIN)
+		return (write(1, "-2147483648", 11));
 	if (n < 0)
-		cnt += write(1, "-", 1);
-	while ((n / div) == 0)
-		div = div / 10;
-	while (div != 1 && n != 0)
 	{
-		digit = '0' + find_digit(n, div);
-		cnt += write(1, &digit, 1);
-		n = n % div;
-		div = div / 10;
+		i += ft_putchar('-');
+		n *= -1;
 	}
-	digit = '0' + find_digit(n, div);
-	cnt += write(1, &digit, 1);
-	return (cnt);
+	if (n == 0) // Si n es 0
+	{
+		i += ft_putchar('0');
+	}
+	else if (n > 9) // Si n tiene más de un dígito
+	{
+		i += ft_putnbr(n / 10);        // Llamada recursiva con el cociente
+		i += ft_putchar(n % 10 + '0'); // Imprimir el dígito de la unidad
+	}
+	else // Si n es un solo dígito
+	{
+		i += ft_putchar(n + '0'); // Imprimir n como un solo dígito
+	}
+	return (i); // Devolver el número total de caracteres impresos
 }
 
 int	ft_putstr(const char *str)
 {
+	if (!str)
+		str = "(null)";
 	if (str)
 		return (write(1, str, ft_strlen(str)));
 	return (0);
 }
 
-int	ft_putchar(char c)
+int	ft_putptr(unsigned long ptr, const char *digits)
 {
-	return (write(1, &c, 1));
-}
+	unsigned long	num;
+	char			buffer[18];
+	int				i;
+	int				digit;
 
-unsigned int	ft_abs(int num)
-{
-	if (num < 0)
-		return (num * -1);
-	return (num);
-}
-
-int	ft_isInteger(long num)
-{
-	if (num > 2147483647 || num < -2147483648)
-		return (0);
-	return (num);
-}
-
-int	ft_putptr(void *ptr, const char *digits)
-{
-	uintptr_t	num;
-	char		buffer[18];
-	int			i;
-	int			digit;
-
+	num = (unsigned long)ptr;
+	if (!ptr)
+		return (write(1, "0x0", 3));
+	if (!num || num <= 0 || num == 0)
+		return (write(1, "0x0", 3));
 	buffer[0] = '0';
 	buffer[1] = 'x';
-	num = (uintptr_t)ptr;
 	i = 17;
 	while (i >= 2)
 	{
@@ -111,13 +75,13 @@ int	ft_putptr(void *ptr, const char *digits)
 	return (18);
 }
 
-int	ft_puthex(int num, const char *digits)
+int	ft_puthex(unsigned int num, const char *digits)
 {
 	char	buffer[10];
 	int		i;
 	int		digit;
 
-	if (!ft_isInteger(num))
+	if (!ft_is_integer(num))
 		return (0);
 	i = 9;
 	while (i >= 0)
@@ -132,4 +96,24 @@ int	ft_puthex(int num, const char *digits)
 		i++;
 	write(1, &buffer[i], (10 - i));
 	return (10 - i);
+}
+int	ft_putnnbr(unsigned int n)
+{
+	int i;
+
+	i = 0;
+	if (n == 0) // Si n es 0
+	{
+		i += ft_putchar('0');
+	}
+	else if (n > 9) // Si n tiene más de un dígito
+	{
+		i += ft_putnbr(n / 10);        // Llamada recursiva con el cociente
+		i += ft_putchar(n % 10 + '0'); // Imprimir el dígito de la unidad
+	}
+	else // Si n es un solo dígito
+	{
+		i += ft_putchar(n + '0'); // Imprimir n como un solo dígito
+	}
+	return (i); // Devolver el número total de caracteres impresos
 }

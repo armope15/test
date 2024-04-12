@@ -4,7 +4,7 @@ AR        = ar
 CFLAGS    = -Wall -Wextra -Werror
 ARFLAGS   = -rcs
 
-SOURCES   = ft_printf.c ft_printf_util.c 
+SOURCES   = ft_printf.c ft_printf_util.c utils.c 
 
 OBJECTS = $(SOURCES:.c=.o) 
 

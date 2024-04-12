@@ -6,7 +6,7 @@
 /*   By: armolina <armolina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:50:11 by armolina          #+#    #+#             */
-/*   Updated: 2024/04/12 10:52:33 by armolina         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:16:41 by armolina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 
 # include <stdarg.h>
 # include <unistd.h>
+# include <limits.h>
 
 int				ft_printf(const char *str, ...);
 int				ft_putchar(char c);
 
 unsigned int	find_digit(int n, int div);
 int				ft_putnbr(int n);
+int				ft_putnnbr(unsigned int n);
 unsigned int	ft_abs(int n);
-int				ft_putptr(void *ptr, const char *digits);
 
 size_t			ft_strlen(const char *s);
 int				ft_putstr(const char *str);
-int				ft_isInteger(long num);
-int				ft_puthex(int num, const char *digits);
+int				ft_is_integer(long num);
+int				ft_putptr(unsigned long ptr, const char *digits);
+int				ft_puthex(unsigned int num, const char *digits);
 #endif

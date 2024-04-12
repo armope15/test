@@ -20,6 +20,8 @@ int main()
 	printf(" %d : \n" , ft_printf("pe%dpito" , +545));
 	printf(" %d : \n" , ft_printf("pe%dpito" , 111111111111111));
 	printf(" %d : \n" , ft_printf("pe%dpito" , 0));
+	printf(" %d : \n" , ft_printf("pe%dpito" , 100));
+	printf(" %d : \n" , ft_printf("pe%dpito" , -100));
 	printf("============================\n");
 	printf("pruebas con %%u	\n");
 	printf("============================\n");
