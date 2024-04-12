@@ -6,7 +6,7 @@
 /*   By: armolina <armolina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:50:34 by armolina          #+#    #+#             */
-/*   Updated: 2024/04/12 15:32:12 by armolina         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:18:22 by armolina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,26 @@ int	ft_putstr(const char *str)
 	return (0);
 }
 
-int	ft_putptr(unsigned long ptr, const char *digits)
+int	ft_putptr(void *ptr, const char *digits)
 {
 	unsigned long	num;
-	char			buffer[18];
-	int				i;
-	int				digit;
 
 	num = (unsigned long)ptr;
-	if (!ptr)
+	if (!ptr || !num || num <= 0 || num == 0)
 		return (write(1, "0x0", 3));
-	if (!num || num <= 0 || num == 0)
-		return (write(1, "0x0", 3));
-	buffer[0] = '0';
-	buffer[1] = 'x';
-	i = 17;
-	while (i >= 2)
-	{
-		digit = num % 16;
-		buffer[i] = digits[digit];
-		num = num / 16;
-		i--;
-	}
-	write(1, buffer, 18);
-	return (18);
+	write(1, "0x", 2);
+	return (ft_puthex(num, digits) + 2);
 }
 
-int	ft_puthex(unsigned int num, const char *digits)
+int	ft_puthex(unsigned long num, const char *digits)
 {
-	char	buffer[10];
+	char	buffer[16];
 	int		i;
 	int		digit;
 
-	if (!ft_is_integer(num))
-		return (0);
-	i = 9;
+	if (num == 0)
+		return (write(1, "0", 1));
+	i = 15;
 	while (i >= 0)
 	{
 		digit = num % 16;
@@ -94,8 +79,8 @@ int	ft_puthex(unsigned int num, const char *digits)
 	i = 0;
 	while (buffer[i] == '0')
 		i++;
-	write(1, &buffer[i], (10 - i));
-	return (10 - i);
+	write(1, &buffer[i], (16 - i));
+	return (16 - i);
 }
 int	ft_putnnbr(unsigned int n)
 {

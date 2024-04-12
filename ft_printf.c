@@ -6,7 +6,7 @@
 /*   By: armolina <armolina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:50:29 by armolina          #+#    #+#             */
-/*   Updated: 2024/04/12 15:16:25 by armolina         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:42:09 by armolina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int	select_option(va_list va, char chr)
 	if (chr == 's')
 		return ((int)ft_putstr((const char *)va_arg(va, const char *)));
 	if (chr == 'p')
-		return ((int)ft_putptr(va_arg(va, unsigned long ), "0123456789abcdef"));
+		return ((int)ft_putptr(va_arg(va, void *), "0123456789abcdef"));
 	if (chr == 'x')
-		return ((int)ft_puthex(va_arg(va, unsigned int ), "0123456789abcdef"));
+		return ((int)ft_puthex(va_arg(va, unsigned int), "0123456789abcdef"));
 	if (chr == 'X')
-		return ((int)ft_puthex(va_arg(va, unsigned int ), "0123456789ABCDEF"));
+		return ((int)ft_puthex(va_arg(va, unsigned int), "0123456789ABCDEF"));
 	return (0);
 }
 
